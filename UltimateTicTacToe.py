@@ -1,11 +1,15 @@
+from typing import List
 from UserInput import *
+from BoardUI import *
 
 COORDINATE_ADJUSTMENTS = {0: (0, 0), 1: (0, 4), 2: (0, 8), 3: (4, 0), 4: (4, 4), 5: (4, 8), 6: (8, 0), 7: (8, 4), 8: (8, 8)}
 SPACE_INDEX_TO_COORDINATE = {0: (0, 0), 1: (0, 1), 2: (0, 2), 3: (1, 0), 4: (1, 1), 5: (1, 2), 6: (2, 0), 7: (2, 1), 8: (2, 2)}
 
 EMPTY_TIC_TAC_TOE_BOARD = [0] * 9
 EMPTY_ULTIMATE_TIC_TAC_TOE_BOARD = [EMPTY_TIC_TAC_TOE_BOARD for _ in range(10)]
-BLANK_UI = [[[" "] * 11] for _ in range(11)]
+# BLANK_ROW = ["x", "|", "x", "|", "x", " ", "|", " ", "x", "|", "x", "|", "x", " ", "|", " ", "x", "|", "x", "|", "x"]
+BLANK_ROW = [" ", "|", " ", "|", " ", " ", "|", " ", " ", "|", " ", "|", " ", " ", "|", " ", " ", "|", " ", "|", " "]
+BLANK_UI = [BLANK_ROW for _ in range(9)]
 
 P1_MOVE_VALUE = 1
 P2_MOVE_VALUE = 4
@@ -37,12 +41,24 @@ def playGame(board: Board, p1: Player, p2: Player):
 
 # def initializeOBoard(board: Board, p1: Player, p2: Player):
 
-# def drawBoard(board: Board, p1: Player, p2: Player):
+def drawBoard(uiRows: List[List[str]]):
+    print()
+    for index, row in enumerate(uiRows):
+        print("".join(row))
 
+        if index == 2 or index == 5:
+            print("      |       |")
+            print("------|-------|------")
+        elif index == 8:
+            continue
+        else:
+            print("----- | ----- | -----")
+    print()
 
 
 if __name__ == "__main__":
-    print(promptForSpace())
+    uiRows = BLANK_UI
+    drawBoard(uiRows)
 
     # p1 = Player()
     
