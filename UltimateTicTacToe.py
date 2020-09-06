@@ -3,7 +3,7 @@ from UserInput import *
 from BoardUI import *
 
 COORDINATE_ADJUSTMENTS = {0: (0, 0), 1: (0, 8), 2: (0, 16), 3: (8, 0), 4: (8, 8), 5: (8, 16), 6: (16, 0), 7: (16, 8), 8: (16, 16)}
-SPACE_INDEX_TO_COORDINATE = {0: (0, 0), 1: (0, 2), 2: (0, 4), 3: (2, 0), 4: (2, 2), 5: (2, 4), 6: (4, 0), 7: (4, 2), 8: (4, 4)}
+# SPACE_INDEX_TO_COORDINATE = {0: (0, 0), 1: (0, 2), 2: (0, 4), 3: (2, 0), 4: (2, 2), 5: (2, 4), 6: (4, 0), 7: (4, 2), 8: (4, 4)}
 
 EMPTY_TIC_TAC_TOE_BOARD = [0] * 9
 EMPTY_ULTIMATE_TIC_TAC_TOE_BOARD = [EMPTY_TIC_TAC_TOE_BOARD for _ in range(9)]
@@ -62,7 +62,13 @@ def initializeXBoard(uiRows: List[List[str]], rowOffset: int, columnOffset: int)
 
 
 
-# def initializeOBoard(board: Board, p1: Player, p2: Player):
+def initializeOBoard(uiRows: List[List[str]], rowOffset: int, columnOffset: int):
+    clearSpaceOnBigBoard(uiRows, rowOffset, columnOffset)
+    for r in range(0, 5):
+        for c in range(0, 5):
+            if r == 0 or c == 0 or r == 4 or c == 4:
+                uiRows[r + rowOffset][c + columnOffset] = "o"
+
 
 def drawBoard(uiRows: List[List[str]]):
     print()
@@ -72,10 +78,15 @@ def drawBoard(uiRows: List[List[str]]):
 
 
 if __name__ == "__main__":
-    spaceIndex = 0
-    rowOffset, columnOffset = SPACE_INDEX_TO_COORDINATE[spaceIndex]
+    spaceIndex = 8
+    rowOffset, columnOffset = COORDINATE_ADJUSTMENTS[spaceIndex]
     uiRows = initializeEmptyBoard()
     initializeXBoard(uiRows, rowOffset, columnOffset)
+
+    spaceIndex = 7
+    rowOffset, columnOffset = COORDINATE_ADJUSTMENTS[spaceIndex]
+
+    initializeOBoard(uiRows, rowOffset, columnOffset)
     drawBoard(uiRows)
 
     # p1 = Player()
