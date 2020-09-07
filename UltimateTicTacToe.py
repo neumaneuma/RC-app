@@ -1,3 +1,4 @@
+import time
 from UserInput import *
 from BoardUI import *
 
@@ -22,15 +23,38 @@ class Player:
         self.winThreshold = self.moveValue * 3
 
 
-def playGame(board: Board, p1: Player, p2: Player):
+def playGame(board, p1, p2, uiRows):
     userSelectsSpaceOnBigBoard = True
-    currentPlayer = p1
+    currPlayer = p1
+
+    while True:
+        if userSelectsSpaceOnBigBoard: bigBoardSpace = prompForBigBoardSpace()
+        miniBoardSpace = prompForMiniBoardSpace()
+        performMiniBoardMove(board, p1, p2, uiRows, bigBoardSpace, miniBoardSpace, currPlayer)
+        if isThreeInARow(board.miniBoards[bigBoardSpace], currPlayer.winThreshold):
+            printDelayedMessage("Three in a row!")
+            performBigBoardMove(board, p1, p2, uiRows, bigBoardSpace, currPlayer)
+            if isThreeInARow(board.bigBoard, currPlayer.winThreshold):
+                printDelayedMessage(f"{currPlayer.name} wins!")
+                return
+
+        currPlayer = p1 if not currPlayer.isP1 else p2
+        bigBoardSpace = miniBoardSpace
+        bigBoardSpaceAlreadyOccupied = board.bigBoard[bigBoardSpace] > 0
+        userSelectsSpaceOnBigBoard = bigBoardSpaceAlreadyOccupied
+        if bigBoardSpaceAlreadyOccupied:
+            printDelayedMessage("The big board space that you are forced to play in is already complete. Choose any unfinished big board space you want to play in.")
 
 def isThreeInARow(board, winThreshold):
     threeInARowList = [(0, 1, 2), (0, 3, 6), (6, 7, 8), (2, 5, 8), (0, 4, 8), (2, 4, 6), (3, 4, 5), (1, 4, 7)]
     for x, y, z in threeInARowList:
         if board[x] + board[y] + board[z] == winThreshold: return True
     return False
+
+def printDelayedMessage(message):
+    time.sleep(1)
+    print(f"\n{message}\n")
+    time.sleep(5)
 
 # These methods may seem like they're doing too much based on the number of parameters they have, but I wanted to ensure that a move (changing the backing data structure, setting the UI, and printing it out to the screen) could be done all in one method to ensure that a step wouldn't be forgotten
 def performMiniBoardMove(board, p1, p2, uiRows, bigBoardSpace, miniBoardSpace, currPlayer):
@@ -58,14 +82,16 @@ if __name__ == "__main__":
 
     p1 = Player(setXBoard, "", "x", True)
     p2 = Player(setOBoard, "", "o", False)
-    currPlayer = p2
-    bigBoardSpace = 8
 
-    performBigBoardMove(board, p1, p2, uiRows, bigBoardSpace, currPlayer)
+    playGame(board, p1, p2, uiRows)
+    # currPlayer = p2
+    # bigBoardSpace = 8
 
-    miniBoardSpace = 4
-    bigBoardSpace = 2
-    performMiniBoardMove(board, p1, p2, uiRows, bigBoardSpace, miniBoardSpace, currPlayer)
+    # performBigBoardMove(board, p1, p2, uiRows, bigBoardSpace, currPlayer)
+
+    # miniBoardSpace = 4
+    # bigBoardSpace = 2
+    # performMiniBoardMove(board, p1, p2, uiRows, bigBoardSpace, miniBoardSpace, currPlayer)
 
     # m = [0,1,4,0,1,4,0,1,4]
     # spaceIndex = 6
