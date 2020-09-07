@@ -26,6 +26,12 @@ def playGame(board: Board, p1: Player, p2: Player):
     userSelectsSpaceOnBigBoard = True
     currentPlayer = p1
 
+def isThreeInARow(board, winThreshold):
+    threeInARowList = [(0, 1, 2), (0, 3, 6), (6, 7, 8), (2, 5, 8), (0, 4, 8), (2, 4, 6), (3, 4, 5), (1, 4, 7)]
+    for x, y, z in threeInARowList:
+        if board[x] + board[y] + board[z] == winThreshold: return True
+    return False
+
 # These methods may seem like they're doing too much based on the number of parameters they have, but I wanted to ensure that a move (changing the backing data structure, setting the UI, and printing it out to the screen) could be done all in one method to ensure that a step wouldn't be forgotten
 def performMiniBoardMove(board, p1, p2, uiRows, bigBoardSpace, miniBoardSpace, currPlayer):
     board.miniBoards[bigBoardSpace][miniBoardSpace] = currPlayer.moveValue
