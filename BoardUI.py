@@ -3,14 +3,15 @@ from typing import List
 COORDINATE_ADJUSTMENTS = {0: (0, 0), 1: (0, 8), 2: (0, 16), 3: (8, 0), 4: (8, 8), 5: (8, 16), 6: (16, 0), 7: (16, 8), 8: (16, 16)}
 SPACE_INDEX_TO_COORDINATE = {0: (0, 0), 1: (0, 2), 2: (0, 4), 3: (2, 0), 4: (2, 2), 5: (2, 4), 6: (4, 0), 7: (4, 2), 8: (4, 4)}
 
-def initializeEmptyBoard():
-    rowWithPipes = [i for i in " | |  |  | |  |  | | "]
-    rowWithDashes = [i for i in "----- | ----- | -----"]
-    rowWithSpaces = [i for i in "      |       |      "]
-    borderRow = [i for i in "------|-------|------"]
+def initializeEmptyUI():
+    rowWithPipes = " | |  |  | |  |  | | "
+    rowWithDashes = "----- | ----- | -----"
+    rowWithSpaces = "      |       |      "
+    borderRow = "------|-------|------"
+    gen = lambda string: [i for i in string]
 
-    # I alter the contents of rowWithPipes and rowWithDashes to show where user played on the screen. However, if I didn’t use copy() then each rowWithPipes in my 2D list would reference the exact same list in memory (same for rowWithDashes), thereby changing each row when I only want to change one row. This seems like an inelegant solution though...
-    return [rowWithPipes.copy(), rowWithDashes.copy(), rowWithPipes.copy(), rowWithDashes.copy(), rowWithPipes.copy(), rowWithSpaces, borderRow, rowWithSpaces, rowWithPipes.copy(), rowWithDashes.copy(), rowWithPipes.copy(), rowWithDashes.copy(), rowWithPipes.copy(), rowWithSpaces, borderRow, rowWithSpaces, rowWithPipes.copy(), rowWithDashes.copy(), rowWithPipes.copy(), rowWithDashes.copy(), rowWithPipes.copy(), rowWithSpaces]
+    # I use a lambda to generate a different list each time because otherwise every instance of rowWithPipes, for example, would refer to the same list in memory. This would result in every row changing at once instead of just the row selected.
+    return [gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithSpaces), gen(borderRow), gen(rowWithSpaces), gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithSpaces), gen(borderRow), gen(rowWithSpaces), gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithSpaces)]
 
 def setUnfinishedBoard(uiRows: List[List[str]], rowOffset: int, columnOffset: int, miniBoard: List[int], p1, p2):
     for index, spaceValue in enumerate(miniBoard):

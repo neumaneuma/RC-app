@@ -84,7 +84,7 @@ if __name__ == "__main__":
     p1 = Player(p1Draw, p1Name, p1Character, isP1=True)
     p2 = Player(p2Draw, p2Name, p2Character, isP1=False)
     board = Board()
-    uiRows = BoardUI.initializeEmptyBoard()
+    uiRows = BoardUI.initializeEmptyUI()
 
     while True:
         playGame(board, p1, p2, uiRows)
