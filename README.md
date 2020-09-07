@@ -1,5 +1,9 @@
 # Ultimate TicTacToe
 
+To run app: `python3 UltimateTicTacToe.py`
+
+---
+
 Ultimate TicTacToe is like regular TicTacToe except for two main differences:
 
 1. There is 1 big board and 9 mini boards. To claim a space on the big board you must win the corresponding mini board.
