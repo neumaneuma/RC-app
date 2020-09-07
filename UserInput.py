@@ -1,13 +1,13 @@
 import time
 
 def prompForBigBoardSpace(board, currPlayer):
-    return promptForSpace(board, "big board", currPlayer.name)
+    return promptForSpace(board, "big board", currPlayer.name, currPlayer.character)
 
 def prompForMiniBoardSpace(board, currPlayer, bigBoardSpace):
-    return promptForSpace(board, "mini board", currPlayer.name, f"\nCurrent big space: {bigBoardSpace}\n")
+    return promptForSpace(board, "mini board", currPlayer.name, currPlayer.character, f"\nCurrent big space: {bigBoardSpace}\n")
 
-def promptForSpace(board, boardType, currPlayer, bigBoardSpaceMsg="\n"):
-    promptMsg = f"0 | 1 | 2\n---------\n3 | 4 | 5\n---------\n6 | 7 | 8\n\n{currPlayer}:{bigBoardSpaceMsg}Select which space in the {boardType} you want to play in:"
+def promptForSpace(board, boardType, name, character, bigBoardSpaceMsg="\n"):
+    promptMsg = f"\n\n0 | 1 | 2\n---------\n3 | 4 | 5\n---------\n6 | 7 | 8\n\n{name} ({character}):{bigBoardSpaceMsg}Select which space in the {boardType} you want to play in: "
     errorMsg1 = "Only 0 through 8 allowed"
     errorMsg2 = "Space is already taken"
     while True:
@@ -23,7 +23,7 @@ def promptForSpace(board, boardType, currPlayer, bigBoardSpaceMsg="\n"):
         return int(val)
 
 def promptToPlayAgain():
-    promptMsg = "Play again? [y/n]:"
+    promptMsg = "Play again? [y/n]: "
     errorMsg = "Only y or n allowed"
     inputIsInvalid = lambda val: len(val) > 1 or val not in ["y", "n"]
     generateReturnValue = lambda val: True if val == "y" else False
@@ -31,14 +31,14 @@ def promptToPlayAgain():
 
 def promptForName(isP1):
     defaultName = "Player 1" if isP1 else "Player 2"
-    promptMsg = "Enter your name []:"
+    promptMsg = f"Enter {defaultName}'s name (default is {defaultName}): "
     errorMsg = "20 character limit"
     inputIsInvalid = lambda val: len(val) > 20
     generateReturnValue = lambda val: val if len(val) > 0 else defaultName
     return makePrompt(promptMsg, errorMsg, inputIsInvalid, generateReturnValue)
 
-def promptForCharacter():
-    promptMsg = "Enter your character [x/o]:"
+def promptForCharacter(name):
+    promptMsg = f"Enter {name}'s character [x/o]: "
     errorMsg = "Only x or o allowed"
     inputIsInvalid = lambda val: len(val) > 1 or val not in ["x", "o"]
     generateReturnValue = lambda val: val

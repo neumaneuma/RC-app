@@ -69,40 +69,23 @@ def performBigBoardMove(board, p1, p2, uiRows, bigBoardSpace, currPlayer):
 
 
 if __name__ == "__main__":
-    # spaceIndex = 8
-    # rowOffset, columnOffset = COORDINATE_ADJUSTMENTS[spaceIndex]
+    p1Name = promptForName(isP1=True)
+    p2Name = promptForName(isP1=False)
+    p1Character = promptForCharacter(p1Name)
+    if p1Character == "x":
+        p1Draw = setXBoard
+        p2Character = "o"
+        p2Draw = setOBoard
+    else:
+        p1Draw = setOBoard
+        p2Character = "x"
+        p2Draw = setXBoard
+
+    p1 = Player(p1Draw, p1Name, p1Character, isP1=True)
+    p2 = Player(p2Draw, p2Name, p2Character, isP1=False)
     board = Board()
     uiRows = initializeEmptyBoard()
-    # setXBoard(uiRows, rowOffset, columnOffset)
 
-    # spaceIndex = 7
-    # rowOffset, columnOffset = COORDINATE_ADJUSTMENTS[spaceIndex]
-
-    # setOBoard(uiRows, rowOffset, columnOffset)
-
-    p1 = Player(setXBoard, "p1", "x", True)
-    p2 = Player(setOBoard, "p2", "o", False)
-
-    playGame(board, p1, p2, uiRows)
-    # currPlayer = p2
-    # bigBoardSpace = 8
-
-    # performBigBoardMove(board, p1, p2, uiRows, bigBoardSpace, currPlayer)
-
-    # miniBoardSpace = 4
-    # bigBoardSpace = 2
-    # performMiniBoardMove(board, p1, p2, uiRows, bigBoardSpace, miniBoardSpace, currPlayer)
-
-    # m = [0,1,4,0,1,4,0,1,4]
-    # spaceIndex = 6
-    # rowOffset, columnOffset = COORDINATE_ADJUSTMENTS[spaceIndex]
-    # setUnfinishedBoard(uiRows, rowOffset, columnOffset, m, p1, p2)
-
-    # drawBoard(uiRows)
-
-
-
-
-    # while True:
-    #     board = Board(bigBoard=EMPTY_TIC_TAC_TOE_BOARD, miniBoards=EMPTY_ULTIMATE_TIC_TAC_TOE_BOARD)
-    #     playGame()
+    while True:
+        playGame(board, p1, p2, uiRows)
+        if not promptToPlayAgain(): break
