@@ -1,7 +1,13 @@
 import time
 
-def promptForSpace():
-    promptMsg = "0 | 1 | 2\n---------\n3 | 4 | 5\n---------\n6 | 7 | 8\n\nSelect which space you want to play in:"
+def prompForBigBoardSpace():
+    return promptForSpace("big board")
+
+def prompForMiniBoardSpace():
+    return promptForSpace("mini board")
+    
+def promptForSpace(board):
+    promptMsg = f"0 | 1 | 2\n---------\n3 | 4 | 5\n---------\n6 | 7 | 8\n\nSelect which space in the {board} you want to play in:"
     errorMsg = "Only 0 through 8 allowed"
     inputIsInvalid = lambda val: len(val) > 1 or val not in ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
     generateReturnValue = lambda val: int(val)
