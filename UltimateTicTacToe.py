@@ -3,7 +3,7 @@ from UserInput import *
 from BoardUI import *
 
 COORDINATE_ADJUSTMENTS = {0: (0, 0), 1: (0, 8), 2: (0, 16), 3: (8, 0), 4: (8, 8), 5: (8, 16), 6: (16, 0), 7: (16, 8), 8: (16, 16)}
-# SPACE_INDEX_TO_COORDINATE = {0: (0, 0), 1: (0, 2), 2: (0, 4), 3: (2, 0), 4: (2, 2), 5: (2, 4), 6: (4, 0), 7: (4, 2), 8: (4, 4)}
+SPACE_INDEX_TO_COORDINATE = {0: (0, 0), 1: (0, 2), 2: (0, 4), 3: (2, 0), 4: (2, 2), 5: (2, 4), 6: (4, 0), 7: (4, 2), 8: (4, 4)}
 
 EMPTY_TIC_TAC_TOE_BOARD = [0] * 9
 EMPTY_ULTIMATE_TIC_TAC_TOE_BOARD = [EMPTY_TIC_TAC_TOE_BOARD for _ in range(9)]
@@ -32,7 +32,17 @@ def playGame(board: Board, p1: Player, p2: Player):
 
 # def updateBoard(board: Board, p1: Player, p2: Player):
 
-# def initializeUnfinishedBoard(board: Board, p1: Player, p2: Player):
+def setUnfinishedBoard(uiRows: List[List[str]], rowOffset: int, columnOffset: int, miniBoard: List[int], p1: Player, p2: Player):
+    for index, spaceValue in enumerate(miniBoard):
+        r, c = SPACE_INDEX_TO_COORDINATE[index]
+        if spaceValue == p1.moveValue:
+            uiRows[r + rowOffset][c + columnOffset] = p1.character
+        elif spaceValue == p2.moveValue:
+            uiRows[r + rowOffset][c + columnOffset] = p2.character
+
+
+
+
 def initializeEmptyBoard():
     rowWithPipes = [i for i in " | |  |  | |  |  | | "]
     rowWithDashes = [i for i in "----- | ----- | -----"]
@@ -48,7 +58,7 @@ def clearSpaceOnBigBoard(uiRows: List[List[str]], rowOffset: int, columnOffset: 
         for c in range(0, 5):
             uiRows[r + rowOffset][c + columnOffset] = " "
 
-def initializeXBoard(uiRows: List[List[str]], rowOffset: int, columnOffset: int):
+def setXBoard(uiRows: List[List[str]], rowOffset: int, columnOffset: int):
     clearSpaceOnBigBoard(uiRows, rowOffset, columnOffset)
     for r in range(0, 5):
         for c in range(0, 5):
@@ -62,7 +72,7 @@ def initializeXBoard(uiRows: List[List[str]], rowOffset: int, columnOffset: int)
 
 
 
-def initializeOBoard(uiRows: List[List[str]], rowOffset: int, columnOffset: int):
+def setOBoard(uiRows: List[List[str]], rowOffset: int, columnOffset: int):
     clearSpaceOnBigBoard(uiRows, rowOffset, columnOffset)
     for r in range(0, 5):
         for c in range(0, 5):
@@ -81,16 +91,24 @@ if __name__ == "__main__":
     spaceIndex = 8
     rowOffset, columnOffset = COORDINATE_ADJUSTMENTS[spaceIndex]
     uiRows = initializeEmptyBoard()
-    initializeXBoard(uiRows, rowOffset, columnOffset)
+    setXBoard(uiRows, rowOffset, columnOffset)
 
     spaceIndex = 7
     rowOffset, columnOffset = COORDINATE_ADJUSTMENTS[spaceIndex]
 
-    initializeOBoard(uiRows, rowOffset, columnOffset)
+    setOBoard(uiRows, rowOffset, columnOffset)
+
+    p1 = Player(None, "", "x", True)
+    p2 = Player(None, "", "o", False)
+    m = [0,1,4,0,1,4,0,1,4]
+    spaceIndex = 6
+    rowOffset, columnOffset = COORDINATE_ADJUSTMENTS[spaceIndex]
+    setUnfinishedBoard(uiRows, rowOffset, columnOffset, m, p1, p2)
+
     drawBoard(uiRows)
 
-    # p1 = Player()
-    
+
+
 
     # while True:
     #     board = Board(bigBoard=EMPTY_TIC_TAC_TOE_BOARD, miniBoards=EMPTY_ULTIMATE_TIC_TAC_TOE_BOARD)
