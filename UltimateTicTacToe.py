@@ -1,6 +1,6 @@
 import time
-from UserInput import *
-from BoardUI import *
+import UserInput
+import BoardUI
 
 EMPTY_TIC_TAC_TOE_BOARD = [0] * 9
 EMPTY_ULTIMATE_TIC_TAC_TOE_BOARD = [[0] * 9 for _ in range(9)]
@@ -28,8 +28,8 @@ def playGame(board, p1, p2, uiRows):
     currPlayer = p1
 
     while True:
-        if userSelectsSpaceOnBigBoard: bigBoardSpace = prompForBigBoardSpace(board.bigBoard, currPlayer)
-        miniBoardSpace = prompForMiniBoardSpace(board.miniBoards[bigBoardSpace], currPlayer, bigBoardSpace)
+        if userSelectsSpaceOnBigBoard: bigBoardSpace = UserInput.prompForBigBoardSpace(board.bigBoard, currPlayer)
+        miniBoardSpace = UserInput.prompForMiniBoardSpace(board.miniBoards[bigBoardSpace], currPlayer, bigBoardSpace)
         performMiniBoardMove(board, p1, p2, uiRows, bigBoardSpace, miniBoardSpace, currPlayer)
         if isThreeInARow(board.miniBoards[bigBoardSpace], currPlayer.winThreshold):
             printDelayedMessage("Three in a row!")
@@ -59,33 +59,33 @@ def printDelayedMessage(message):
 # These methods may seem like they're doing too much based on the number of parameters they have, but I wanted to ensure that a move (changing the backing data structure, setting the UI, and printing it out to the screen) could be done all in one method to ensure that a step wouldn't be forgotten
 def performMiniBoardMove(board, p1, p2, uiRows, bigBoardSpace, miniBoardSpace, currPlayer):
     board.miniBoards[bigBoardSpace][miniBoardSpace] = currPlayer.moveValue
-    setBoardUI(board, p1, p2, uiRows, bigBoardSpace)
-    drawBoard(uiRows)
+    BoardUI.setBoardUI(board, p1, p2, uiRows, bigBoardSpace)
+    BoardUI.drawBoard(uiRows)
 
 def performBigBoardMove(board, p1, p2, uiRows, bigBoardSpace, currPlayer):
     board.bigBoard[bigBoardSpace] = currPlayer.moveValue
-    setBoardUI(board, p1, p2, uiRows, bigBoardSpace)
-    drawBoard(uiRows)
+    BoardUI.setBoardUI(board, p1, p2, uiRows, bigBoardSpace)
+    BoardUI.drawBoard(uiRows)
 
 
 if __name__ == "__main__":
-    p1Name = promptForName(isP1=True)
-    p2Name = promptForName(isP1=False)
-    p1Character = promptForCharacter(p1Name)
+    p1Name = UserInput.promptForName(isP1=True)
+    p2Name = UserInput.promptForName(isP1=False)
+    p1Character = UserInput.promptForCharacter(p1Name)
     if p1Character == "x":
-        p1Draw = setXBoard
+        p1Draw = BoardUI.setXBoard
         p2Character = "o"
-        p2Draw = setOBoard
+        p2Draw = BoardUI.setOBoard
     else:
-        p1Draw = setOBoard
+        p1Draw = BoardUI.setOBoard
         p2Character = "x"
-        p2Draw = setXBoard
+        p2Draw = BoardUI.setXBoard
 
     p1 = Player(p1Draw, p1Name, p1Character, isP1=True)
     p2 = Player(p2Draw, p2Name, p2Character, isP1=False)
     board = Board()
-    uiRows = initializeEmptyBoard()
+    uiRows = BoardUI.initializeEmptyBoard()
 
     while True:
         playGame(board, p1, p2, uiRows)
-        if not promptToPlayAgain(): break
+        if not UserInput.promptToPlayAgain(): break
