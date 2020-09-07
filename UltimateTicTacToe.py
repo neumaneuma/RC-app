@@ -4,6 +4,7 @@ import BoardUI
 
 P1_MOVE_VALUE = 1
 P2_MOVE_VALUE = 4
+CATS_GAME_VALUE = 100
 
 class Board:
     def __init__(self):
@@ -34,6 +35,12 @@ def playGame(board, p1, p2, uiRows):
             if isThreeInARow(board.bigBoard, currPlayer.winThreshold):
                 printDelayedMessage(f"{currPlayer.name} wins!")
                 return
+            elif isCatsGame(board.bigBoard):
+                printDelayedMessage("It's a draw￼!")
+                return
+        elif isCatsGame(board.miniBoards[bigBoardSpace]):
+            printDelayedMessage(f"Big board space #{bigBoardSpace} is a ￼draw￼")
+            board.bigBoard[bigBoardSpace] = CATS_GAME_VALUE
 
         currPlayer = p1 if not currPlayer.isP1 else p2
         bigBoardSpace = miniBoardSpace
@@ -47,6 +54,11 @@ def isThreeInARow(board, winThreshold):
     for x, y, z in threeInARowList:
         if board[x] + board[y] + board[z] == winThreshold: return True
     return False
+
+def isCatsGame(board):
+    for i in board:
+        if i == 0: return False
+    return True
 
 def printDelayedMessage(message):
     time.sleep(1)
