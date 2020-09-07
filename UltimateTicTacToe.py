@@ -28,8 +28,8 @@ def playGame(board, p1, p2, uiRows):
     currPlayer = p1
 
     while True:
-        if userSelectsSpaceOnBigBoard: bigBoardSpace = prompForBigBoardSpace()
-        miniBoardSpace = prompForMiniBoardSpace()
+        if userSelectsSpaceOnBigBoard: bigBoardSpace = prompForBigBoardSpace(currPlayer)
+        miniBoardSpace = prompForMiniBoardSpace(currPlayer, bigBoardSpace)
         performMiniBoardMove(board, p1, p2, uiRows, bigBoardSpace, miniBoardSpace, currPlayer)
         if isThreeInARow(board.miniBoards[bigBoardSpace], currPlayer.winThreshold):
             printDelayedMessage("Three in a row!")
@@ -80,8 +80,8 @@ if __name__ == "__main__":
 
     # setOBoard(uiRows, rowOffset, columnOffset)
 
-    p1 = Player(setXBoard, "", "x", True)
-    p2 = Player(setOBoard, "", "o", False)
+    p1 = Player(setXBoard, "p1", "x", True)
+    p2 = Player(setOBoard, "p2", "o", False)
 
     playGame(board, p1, p2, uiRows)
     # currPlayer = p2
