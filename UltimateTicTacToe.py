@@ -2,16 +2,13 @@ import time
 import UserInput
 import BoardUI
 
-EMPTY_TIC_TAC_TOE_BOARD = [0] * 9
-EMPTY_ULTIMATE_TIC_TAC_TOE_BOARD = [[0] * 9 for _ in range(9)]
-
 P1_MOVE_VALUE = 1
 P2_MOVE_VALUE = 4
 
 class Board:
     def __init__(self):
-        self.bigBoard = EMPTY_TIC_TAC_TOE_BOARD
-        self.miniBoards = EMPTY_ULTIMATE_TIC_TAC_TOE_BOARD
+        self.bigBoard = [0] * 9
+        self.miniBoards = [[0] * 9 for _ in range(9)]
     
 class Player:
     def __init__(self, draw, name, character, isP1):
@@ -83,9 +80,9 @@ if __name__ == "__main__":
 
     p1 = Player(p1Draw, p1Name, p1Character, isP1=True)
     p2 = Player(p2Draw, p2Name, p2Character, isP1=False)
-    board = Board()
-    uiRows = BoardUI.initializeEmptyUI()
 
     while True:
+        board = Board()
+        uiRows = BoardUI.initializeEmptyUI()
         playGame(board, p1, p2, uiRows)
         if not UserInput.promptToPlayAgain(): break
