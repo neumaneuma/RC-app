@@ -10,8 +10,13 @@ def initializeEmptyUI():
     borderRow = "------|-------|------"
     gen = lambda string: [i for i in string]
 
-    # I use a lambda to generate a different list each time because otherwise every instance of rowWithPipes, for example, would refer to the same list in memory. This would result in every row changing at once instead of just the row selected.
-    return [gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithSpaces), gen(borderRow), gen(rowWithSpaces), gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithSpaces), gen(borderRow), gen(rowWithSpaces), gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithSpaces)]
+    # I use a lambda to generate a different list each time because otherwise every instance of rowWithPipes,
+    # for example, would refer to the same list in memory. This would result in every row changing at once instead
+    # of just the row selected.
+    return [gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithSpaces),
+    gen(borderRow), gen(rowWithSpaces), gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithDashes),
+    gen(rowWithPipes), gen(rowWithSpaces), gen(borderRow), gen(rowWithSpaces), gen(rowWithPipes), gen(rowWithDashes),
+    gen(rowWithPipes), gen(rowWithDashes), gen(rowWithPipes), gen(rowWithSpaces)]
 
 def setUnfinishedBoard(uiRows: List[List[str]], rowOffset: int, columnOffset: int, miniBoard: List[int], p1, p2):
     for index, spaceValue in enumerate(miniBoard):

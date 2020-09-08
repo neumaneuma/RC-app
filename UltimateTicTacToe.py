@@ -65,7 +65,9 @@ def printDelayedMessage(message):
     print(f"\n{message}\n")
     time.sleep(5)
 
-# These methods may seem like they're doing too much based on the number of parameters they have, but I wanted to ensure that a move (changing the backing data structure, setting the UI, and printing it out to the screen) could be done all in one method to ensure that a step wouldn't be forgotten
+# These methods may seem like they're doing too much based on the number of parameters they have, but I wanted to
+# ensure that a move (changing the backing data structure, setting the UI, and printing it out to the screen) could
+# be done all in one method to ensure that a step wouldn't be forgotten
 def performMiniBoardMove(board, p1, p2, uiRows, bigBoardSpace, miniBoardSpace, currPlayer):
     board.miniBoards[bigBoardSpace][miniBoardSpace] = currPlayer.moveValue
     BoardUI.setBoardUI(board, p1, p2, uiRows, bigBoardSpace)
